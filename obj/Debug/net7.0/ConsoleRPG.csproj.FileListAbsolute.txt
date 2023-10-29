@@ -20,3 +20,4 @@ C:\Users\pawel\source\repos\csVSProjects\ConsoleRPG\obj\Debug\net7.0\refint\Cons
 C:\Users\pawel\source\repos\csVSProjects\ConsoleRPG\obj\Debug\net7.0\ConsoleRPG.pdb
 C:\Users\pawel\source\repos\csVSProjects\ConsoleRPG\obj\Debug\net7.0\ConsoleRPG.genruntimeconfig.cache
 C:\Users\pawel\source\repos\csVSProjects\ConsoleRPG\obj\Debug\net7.0\ref\ConsoleRPG.dll
+C:\Users\pawel\source\repos\csVSProjects\ConsoleRPG\bin\Debug\net7.0\Newtonsoft.Json.dll

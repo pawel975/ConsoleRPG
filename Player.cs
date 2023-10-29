@@ -10,7 +10,7 @@ namespace ConsoleRPG
     {
         public string Name { get; }
         public int Level { get; }
-        static public List<Statistic> Statistics { get; set; } 
+        public List<Statistic> Statistics {  get; set;} 
         public Player(string name, List<Statistic> statistics)
         {
             Name = name;

@@ -4,22 +4,21 @@ namespace ConsoleRPG
 {
     class Program
     {
+        static public string saveFileDirectoryPath = default;
+        static readonly private string saveFileName = "saveFile.json";
         // Init player instance
         static public Player player = default;
         static void LoadGame()
         {
-            Console.Write("Insert save file path to load progress");
-            string saveFilePath = Console.ReadLine();
-
-            string serializedSaveFile = default;
+            string serializedProgress = default;
             string pressedKey = default;
 
             do
             {
                 try
                 {
-                    serializedSaveFile = File.ReadAllText($"{saveFilePath}/saveFile.json");
-                    player = JsonConvert.DeserializeObject<Player>(serializedSaveFile);
+                    serializedProgress = File.ReadAllText($"{saveFileDirectoryPath}/{saveFileName}");
+                    player = JsonConvert.DeserializeObject<Player>(serializedProgress);
 
                 }
                 catch
@@ -29,11 +28,20 @@ namespace ConsoleRPG
                     pressedKey = Console.ReadLine().ToLower();
 
                 }
-            } while (serializedSaveFile == default || pressedKey == "x");
+            } while (serializedProgress == default || pressedKey == "x");
+        }
+
+        static void SaveGame()
+        {
+            var serializedProgress = JsonConvert.SerializeObject(player);
+            File.WriteAllText($"{saveFileDirectoryPath}/{saveFileName}", serializedProgress);
+
         }
 
         static void Main(string[] args)
         {
+            Console.Write("Insert save file directory path to load/save progress");
+            saveFileDirectoryPath = Console.ReadLine();
 
         }
     }
