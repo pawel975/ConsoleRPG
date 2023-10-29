@@ -9,8 +9,8 @@ namespace ConsoleRPG
     class Player
     {
         public string Name { get; }
-        public int Level { get; }
-        public List<Statistic> Statistics {  get; set;} 
+        public int Level { get; set; }
+        public List<Statistic> Statistics { get; set; }
         public Player(string name, List<Statistic> statistics)
         {
             Name = name;
@@ -18,7 +18,9 @@ namespace ConsoleRPG
             Statistics = statistics;
         }
 
-        public void PrintPlayerInfo ()
+        private void LevelUp() => Level++;
+
+        public void PrintPlayerInfo()
         {
             Console.WriteLine($"Name: {Name}");
             Console.WriteLine($"Level: {Level}");
@@ -29,19 +31,14 @@ namespace ConsoleRPG
             }
         }
 
-        /// <summary>
-        /// Update point for given statistic
-        /// </summary>
-        /// <param name="statName"></param>
-        /// <param name="updatedStatPoints"></param>
         public void UpdatePlayerStatistic(string statName, int updatedStatPoints)
         {
             if (updatedStatPoints < 0)
             {
                 Console.WriteLine($"Updated points level cannot be less than 0, passed value - {updatedStatPoints}");
             }
-            
-            foreach (var stat in Statistics) 
+
+            foreach (var stat in Statistics)
             {
                 if (stat.Name == statName)
                 {
@@ -50,25 +47,43 @@ namespace ConsoleRPG
                 }
             }
         }
-        
-        /// <summary>
-        /// Creates new statistics with given init points.
-        /// </summary>
-        /// <param name="statName"></param>
-        /// <param name="points"></param>
+
         public void CreateNewStatistic(string statName, int points)
         {
             Statistics.Add(new Statistic(statName, points));
         }
 
-        /// <summary>
-        /// Deletes statistic from player's statistics.
-        /// </summary>
-        /// <param name="statName"></param>
         public void DeleteStatistic(string statName)
         {
             Statistic statisticToRemove = Statistics.FirstOrDefault(stat => stat.Name == statName);
             Statistics.Remove(statisticToRemove);
         }
+        public void FightCreatures()
+        {
+            //TODO: Implementation
+            //Throw random number that will tell if player won or not, based on result level up or not
+            bool PlayerWonBattle = default;
+
+            if (PlayerWonBattle)
+            {
+                LevelUp();
+                Console.WriteLine("You won the battle!");
+            } else
+            {
+                Console.WriteLine("You defeated...");
+            }
+
+
+        }
+        public void LearnSkills()
+        {
+            //TODO: Implementation
+        }
+        public void ImproveSkills()
+        {
+            //TODO: Implementation
+        }
+
+
     }
 }

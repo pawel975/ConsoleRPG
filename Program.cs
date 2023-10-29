@@ -7,9 +7,30 @@ namespace ConsoleRPG
         static public string saveFileDirectoryPath = default;
         static readonly private string saveFileName = "saveFile.json";
         static public bool GameActive = false;
-        static public bool IsGameExit = false;
-        // Init player instance
-        static public Player player = default;
+        static public bool IsExitGameTriggered = false;
+        static public Player Player = default;
+
+        static void SetSavePath()
+        {
+            do
+            {
+                Console.Write("Insert save file directory path to load/save progress, [x - to exit]: ");
+                saveFileDirectoryPath = Console.ReadLine();
+
+                if (saveFileDirectoryPath == "x")
+                {
+                    IsExitGameTriggered = true;
+                }
+            } while (!Directory.Exists(saveFileDirectoryPath) && !IsExitGameTriggered);
+        }
+
+        static void NewGame()
+        {
+            Console.Write("Insert character name: ");
+            string name = Console.ReadLine();
+
+            Player = new Player(name, new List<Statistic>());
+        }
 
         static void LoadGame()
         {
@@ -21,39 +42,27 @@ namespace ConsoleRPG
                 try
                 {
                     serializedProgress = File.ReadAllText($"{saveFileDirectoryPath}/{saveFileName}");
-                    player = JsonConvert.DeserializeObject<Player>(serializedProgress);
+                    Player = JsonConvert.DeserializeObject<Player>(serializedProgress);
 
                 }
                 catch
                 {
                     Console.WriteLine("Invalid Path... \n");
-                    Console.WriteLine("Do you want to e[x]it? or [c]ontinue?: ");
-                    pressedKey = Console.ReadLine().ToLower();
-
                 }
             } while (serializedProgress == default || pressedKey == "x");
         }
 
         static void SaveGame()
         {
-            var serializedProgress = JsonConvert.SerializeObject(player);
+            var serializedProgress = JsonConvert.SerializeObject(Player);
             File.WriteAllText($"{saveFileDirectoryPath}/{saveFileName}", serializedProgress);
-
-        }
-
-        static void NewGame()
-        {
-            Console.Write("Insert character name: ");
-            string name = Console.ReadLine();
-
-            player = new Player(name, new List<Statistic>());
         }
 
         static void DisplayMenu()
         {
             do
             {
-                Console.WriteLine("Choose action: ");
+                Console.WriteLine("***** MENU ***** ");
                 Console.WriteLine("1 - New Game ");
                 Console.WriteLine("2 - Load Game ");
                 Console.WriteLine("X - Exit");
@@ -72,35 +81,58 @@ namespace ConsoleRPG
                         break;
                     case "x":
                         LoadGame();
-                        IsGameExit = true;
+                        IsExitGameTriggered = true;
                         break;
                     default:
                         Console.WriteLine("Invalid option choice...");
                         break;
                 }
 
-            } while (!GameActive && !IsGameExit);
+            } while (!IsExitGameTriggered);
         }
 
-        static void SetSavePath()
+        static void GameFlow()
         {
+
+            bool GoBackToMenu = false;
+            Console.WriteLine("***** Game *****");
+
             do
             {
-                Console.Write("Insert save file directory path to load/save progress, [x - to exit]: ");
-                saveFileDirectoryPath = Console.ReadLine();
+                Console.WriteLine("What do you want to do?: ");
+                Console.WriteLine("1 - Fight creatures");
+                Console.WriteLine("2 - Learn skills");
+                Console.WriteLine("3 - Improve skills");
+                Console.WriteLine("x - Go back to menu");
 
-                if (saveFileDirectoryPath == "x")
+                string userChoice = Console.ReadLine().ToLower();
+
+                switch (userChoice)
                 {
-                    IsGameExit = true;
+                    case "1":
+                        Player.FightCreatures();
+                        break;
+                    case "2":
+                        Player.LearnSkills();
+                        break;
+                    case "3":
+                        Player.ImproveSkills();
+                        break;
+                    case "x":
+                        GoBackToMenu = true;
+                        break;
+                    default:
+                        break;
                 }
-            } while (!Directory.Exists(saveFileDirectoryPath) && !IsGameExit);
+
+            } while (!GoBackToMenu);
         }
 
         static int Main(string[] args)
         {
             SetSavePath();
 
-            if (!IsGameExit) DisplayMenu();
+            if (!IsExitGameTriggered) DisplayMenu();
 
             if (player != null) SaveGame();
 
