@@ -6,7 +6,7 @@ namespace ConsoleRPG
     {
         static public string saveFileDirectoryPath = default;
         static readonly private string saveFileName = "saveFile.json";
-        static public bool GameActive = true;
+        static public bool GameActive = false;
         static public bool IsGameExit = false;
         // Init player instance
         static public Player player = default;
@@ -49,19 +49,8 @@ namespace ConsoleRPG
             player = new Player(name, new List<Statistic>());
         }
 
-        static int Main(string[] args)
+        static void DisplayMenu()
         {
-            do
-            {
-                Console.Write("Insert save file directory path to load/save progress, [x - to exit]: ");
-                saveFileDirectoryPath = Console.ReadLine();
-
-                if (saveFileDirectoryPath == "x")
-                {
-                    return 0;
-                }
-            } while (!Directory.Exists(saveFileDirectoryPath));
-
             do
             {
                 Console.WriteLine("Choose action: ");
@@ -90,13 +79,30 @@ namespace ConsoleRPG
                         break;
                 }
 
-            } while (!GameActive || IsGameExit);
+            } while (!GameActive && !IsGameExit);
+        }
 
-            //TODO: Game until player choose [x]
+        static void SetSavePath()
+        {
             do
             {
+                Console.Write("Insert save file directory path to load/save progress, [x - to exit]: ");
+                saveFileDirectoryPath = Console.ReadLine();
 
-            } while (IsGameExit);
+                if (saveFileDirectoryPath == "x")
+                {
+                    IsGameExit = true;
+                }
+            } while (!Directory.Exists(saveFileDirectoryPath) && !IsGameExit);
+        }
+
+        static int Main(string[] args)
+        {
+            SetSavePath();
+
+            if (!IsGameExit) DisplayMenu();
+
+            if (player != null) SaveGame();
 
             return 0;
         }
