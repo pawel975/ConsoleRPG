@@ -60,16 +60,20 @@ namespace ConsoleRPG
         }
         public void FightCreatures()
         {
-            //TODO: Implementation
-            //Throw random number that will tell if player won or not, based on result level up or not
-            bool PlayerWonBattle = default;
+            Random random = new Random();
+            int BattleIndex = (int)Math.Floor(random.NextDouble());
+
+            bool PlayerWonBattle = BattleIndex == 1;
 
             if (PlayerWonBattle)
             {
                 LevelUp();
+                Console.WriteLine(BattleIndex);
                 Console.WriteLine("You won the battle!");
-            } else
+            }
+            else
             {
+                Console.WriteLine(BattleIndex);
                 Console.WriteLine("You defeated...");
             }
 
