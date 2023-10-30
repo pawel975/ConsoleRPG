@@ -20,18 +20,7 @@ namespace ConsoleRPG
 
         private void LevelUp() => Level++;
 
-        public void PrintPlayerInfo()
-        {
-            Console.WriteLine($"Name: {Name}");
-            Console.WriteLine($"Level: {Level}");
-            Console.WriteLine("Statistics:");
-            foreach (Statistic stat in Statistics)
-            {
-                Console.WriteLine($"\t{stat.Name}: {stat.Points}");
-            }
-        }
-
-        public void UpdatePlayerStatistic(string statName, int updatedStatPoints)
+        private void UpdatePlayerStatistic(string statName, int updatedStatPoints)
         {
             if (updatedStatPoints < 0)
             {
@@ -48,22 +37,33 @@ namespace ConsoleRPG
             }
         }
 
-        public void CreateNewStatistic(string statName, int points)
+        private void CreateNewStatistic(string statName)
         {
-            Statistics.Add(new Statistic(statName, points));
+            Statistics.Add(new Statistic(statName));
         }
 
-        public void DeleteStatistic(string statName)
+        private void DeleteStatistic(string statName)
         {
             Statistic statisticToRemove = Statistics.FirstOrDefault(stat => stat.Name == statName);
             Statistics.Remove(statisticToRemove);
         }
+
+        public void PrintPlayerInfo()
+        {
+            Console.WriteLine($"Name: {Name}");
+            Console.WriteLine($"Level: {Level}");
+            Console.WriteLine("Statistics:");
+            foreach (Statistic stat in Statistics)
+            {
+                Console.WriteLine($"\t{stat.Name}: {stat.Points}");
+            }
+        }
         public void FightCreatures()
         {
-            Random random = new Random();
-            int BattleIndex = (int)Math.Floor(random.NextDouble());
+            // Generates 0 or 1 randomly
+            int BattleIndex = (int)Math.Floor(new Random().NextDouble());
 
-            bool PlayerWonBattle = BattleIndex == 1;
+            bool PlayerWonBattle = BattleIndex == 1 ? true : false;
 
             if (PlayerWonBattle)
             {
@@ -79,13 +79,12 @@ namespace ConsoleRPG
 
 
         }
-        public void LearnSkills()
+        public void LearnSkills(string statName) => CreateNewStatistic(statName);
+
+        public void ImproveSkills(string statName)
         {
-            //TODO: Implementation
-        }
-        public void ImproveSkills()
-        {
-            //TODO: Implementation
+            Statistic statToUpdate = Statistics.FirstOrDefault(stat => statName == stat.Name);
+            statToUpdate.LevelUpStatistic();
         }
 
 

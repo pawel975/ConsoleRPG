@@ -113,7 +113,9 @@ namespace ConsoleRPG
                         Player.FightCreatures();
                         break;
                     case "2":
-                        Player.LearnSkills();
+                        Console.Write("Type name of statistic: ");
+                        string statName = Console.ReadLine();
+                        Player.LearnSkills(statName);
                         break;
                     case "3":
                         Player.ImproveSkills();

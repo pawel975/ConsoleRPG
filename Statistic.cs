@@ -9,11 +9,14 @@ namespace ConsoleRPG
     class Statistic
     {
         public string Name { get; set; }
-        public int Points { get; set; }
-        public Statistic(string name, int points)
+        public int Points { get; set; } = 1;
+        public Statistic(string name)
         {
             Name = name;
-            Points = points;
         }
+
+        public void LevelUpStatistic() => Points++;
+
+        public void UpdateStatistic(int levelToSet) => Points = levelToSet;
     }
 }
