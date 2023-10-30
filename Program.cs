@@ -114,11 +114,11 @@ namespace ConsoleRPG
                         break;
                     case "2":
                         Console.Write("Type name of statistic: ");
-                        string statName = Console.ReadLine();
-                        Player.LearnSkills(statName);
+                        Player.LearnSkills(Console.ReadLine());
                         break;
                     case "3":
-                        Player.ImproveSkills();
+                        Console.Write("Type name of statistic: ");
+                        Player.ImproveSkills(Console.ReadLine());
                         break;
                     case "x":
                         GoBackToMenu = true;

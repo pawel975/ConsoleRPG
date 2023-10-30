@@ -84,7 +84,8 @@ namespace ConsoleRPG
         public void ImproveSkills(string statName)
         {
             Statistic statToUpdate = Statistics.FirstOrDefault(stat => statName == stat.Name);
-            statToUpdate.LevelUpStatistic();
+            if (statToUpdate != null) statToUpdate.LevelUpStatistic();
+            else Console.WriteLine($"There is no such statistic like '{statName}'...");
         }
 
 
