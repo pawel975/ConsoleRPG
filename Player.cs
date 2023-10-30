@@ -48,6 +48,8 @@ namespace ConsoleRPG
             Statistics.Remove(statisticToRemove);
         }
 
+        private Statistic GetStatistic(string statName) => Statistics.FirstOrDefault(stat => stat.Name == statName);
+
         public void PrintPlayerInfo()
         {
             Console.WriteLine($"Name: {Name}");
@@ -61,7 +63,7 @@ namespace ConsoleRPG
         public void FightCreatures()
         {
             // Generates 0 or 1 randomly
-            int BattleIndex = (int)Math.Floor(new Random().NextDouble());
+            int BattleIndex = (int)Math.Round(new Random().NextDouble());
 
             bool PlayerWonBattle = BattleIndex == 1 ? true : false;
 
@@ -69,22 +71,30 @@ namespace ConsoleRPG
             {
                 LevelUp();
                 Console.WriteLine(BattleIndex);
-                Console.WriteLine("You won the battle!");
+                Console.WriteLine("You won the battle!\n");
             }
             else
             {
                 Console.WriteLine(BattleIndex);
-                Console.WriteLine("You defeated...");
+                Console.WriteLine("You defeated...\n");
             }
 
 
         }
-        public void LearnSkills(string statName) => CreateNewStatistic(statName);
+        public void LearnSkills(string statName)
+        {
+            CreateNewStatistic(statName);
+            Console.WriteLine($"You learned new skill - {statName} (level: {GetStatistic(statName).Points})");
+        }
 
         public void ImproveSkills(string statName)
         {
             Statistic statToUpdate = Statistics.FirstOrDefault(stat => statName == stat.Name);
-            if (statToUpdate != null) statToUpdate.LevelUpStatistic();
+            if (statToUpdate != null)
+            {
+                statToUpdate.LevelUpStatistic();
+                Console.WriteLine($"You updated statistic - {statToUpdate.Name} (level: {statToUpdate.Points}");
+            }
             else Console.WriteLine($"There is no such statistic like '{statName}'...");
         }
 

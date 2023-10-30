@@ -6,7 +6,6 @@ namespace ConsoleRPG
     {
         static public string saveFileDirectoryPath = default;
         static readonly private string saveFileName = "saveFile.json";
-        static public bool GameActive = false;
         static public bool IsExitGameTriggered = false;
         static public Player Player = default;
 
@@ -73,11 +72,11 @@ namespace ConsoleRPG
                 {
                     case "1":
                         NewGame();
-                        GameActive = true;
+                        GameFlow();
                         break;
                     case "2":
                         LoadGame();
-                        GameActive = true;
+                        GameFlow();
                         break;
                     case "x":
                         LoadGame();
@@ -128,6 +127,8 @@ namespace ConsoleRPG
                 }
 
             } while (!GoBackToMenu);
+
+            SaveGame();
         }
 
         static int Main(string[] args)
@@ -136,7 +137,7 @@ namespace ConsoleRPG
 
             if (!IsExitGameTriggered) DisplayMenu();
 
-            if (player != null) SaveGame();
+            if (Player != null) SaveGame();
 
             return 0;
         }
