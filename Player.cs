@@ -24,7 +24,7 @@ namespace ConsoleRPG
         {
             if (updatedStatPoints < 0)
             {
-                Console.WriteLine($"Updated points level cannot be less than 0, passed value - {updatedStatPoints}");
+                Console.WriteLine($"\nUpdated points level cannot be less than 0, passed value - {updatedStatPoints}");
             }
 
             foreach (var stat in Statistics)
@@ -32,7 +32,7 @@ namespace ConsoleRPG
                 if (stat.Name == statName)
                 {
                     stat.Points = updatedStatPoints;
-                    Console.WriteLine($"Player [{statName}] updated to [{updatedStatPoints}]");
+                    Console.WriteLine($"\nPlayer [{statName}] updated to [{updatedStatPoints}]");
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace ConsoleRPG
 
         public void PrintPlayerInfo()
         {
-            Console.WriteLine($"Name: {Name}");
+            Console.WriteLine($"\nName: {Name}");
             Console.WriteLine($"Level: {Level}");
             Console.WriteLine("Statistics:");
             foreach (Statistic stat in Statistics)
@@ -70,21 +70,15 @@ namespace ConsoleRPG
             if (PlayerWonBattle)
             {
                 LevelUp();
-                Console.WriteLine(BattleIndex);
-                Console.WriteLine("You won the battle!\n");
+                Console.WriteLine("\nYou won the battle!");
             }
-            else
-            {
-                Console.WriteLine(BattleIndex);
-                Console.WriteLine("You defeated...\n");
-            }
-
+            else Console.WriteLine("\nYou defeated...");
 
         }
         public void LearnSkills(string statName)
         {
             CreateNewStatistic(statName);
-            Console.WriteLine($"You learned new skill - {statName} (level: {GetStatistic(statName).Points})");
+            Console.WriteLine($"\nYou learned new skill - {statName} (level: {GetStatistic(statName).Points})");
         }
 
         public void ImproveSkills(string statName)
@@ -93,9 +87,9 @@ namespace ConsoleRPG
             if (statToUpdate != null)
             {
                 statToUpdate.LevelUpStatistic();
-                Console.WriteLine($"You updated statistic - {statToUpdate.Name} (level: {statToUpdate.Points}");
+                Console.WriteLine($"\nYou updated statistic - {statToUpdate.Name} (level: {statToUpdate.Points}");
             }
-            else Console.WriteLine($"There is no such statistic like '{statName}'...");
+            else Console.WriteLine($"\nThere is no such statistic like '{statName}'...");
         }
 
 

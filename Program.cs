@@ -13,7 +13,7 @@ namespace ConsoleRPG
         {
             do
             {
-                Console.Write("Insert save file directory path to load/save progress, [x - to exit]: ");
+                Console.Write("\nInsert save file directory path to load/save progress, [x - to exit]: ");
                 saveFileDirectoryPath = Console.ReadLine();
 
                 if (saveFileDirectoryPath == "x")
@@ -25,7 +25,7 @@ namespace ConsoleRPG
 
         static void NewGame()
         {
-            Console.Write("Insert character name: ");
+            Console.Write("\nInsert character name: ");
             string name = Console.ReadLine();
 
             Player = new Player(name, new List<Statistic>());
@@ -46,7 +46,7 @@ namespace ConsoleRPG
                 }
                 catch
                 {
-                    Console.WriteLine("Invalid Path... \n");
+                    Console.WriteLine("\nInvalid Path...");
                 }
             } while (serializedProgress == default || pressedKey == "x");
         }
@@ -61,11 +61,12 @@ namespace ConsoleRPG
         {
             do
             {
-                Console.WriteLine("***** MENU ***** ");
+                Console.WriteLine("\n***** MENU ***** ");
                 Console.WriteLine("1 - New Game ");
                 Console.WriteLine("2 - Load Game ");
-                Console.WriteLine("X - Exit");
+                Console.WriteLine("x - Exit");
 
+                Console.Write("Choice: ");
                 string userPickedOption = Console.ReadLine();
 
                 switch (userPickedOption.ToLower())
@@ -83,7 +84,7 @@ namespace ConsoleRPG
                         IsExitGameTriggered = true;
                         break;
                     default:
-                        Console.WriteLine("Invalid option choice...");
+                        Console.WriteLine("\nInvalid option choice...");
                         break;
                 }
 
@@ -94,7 +95,7 @@ namespace ConsoleRPG
         {
 
             bool GoBackToMenu = false;
-            Console.WriteLine("***** Game *****");
+            Console.WriteLine("\n***** Game *****");
 
             do
             {
@@ -104,6 +105,7 @@ namespace ConsoleRPG
                 Console.WriteLine("3 - Improve skills");
                 Console.WriteLine("x - Go back to menu");
 
+                Console.Write("Choice: ");
                 string userChoice = Console.ReadLine().ToLower();
 
                 switch (userChoice)
@@ -112,11 +114,11 @@ namespace ConsoleRPG
                         Player.FightCreatures();
                         break;
                     case "2":
-                        Console.Write("Type name of statistic: ");
+                        Console.Write("\nType name of statistic: ");
                         Player.LearnSkills(Console.ReadLine());
                         break;
                     case "3":
-                        Console.Write("Type name of statistic: ");
+                        Console.Write("\nType name of statistic: ");
                         Player.ImproveSkills(Console.ReadLine());
                         break;
                     case "x":
